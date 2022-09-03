@@ -1,14 +1,12 @@
-            section .text
+; x32 version - 32-bit pointers
+        section .text
         global  mystrrev
 mystrrev:
-        push    ebp
-        mov     ebp, esp
-
-        mov     ecx, [ebp+8]
+        mov     ecx, edi
         mov     edx, ecx
 
 find_eos:
-        mov     al, [edx]
+        mov     al, [rdx]
         inc     edx
         test    al, al
         jnz     find_eos
@@ -17,15 +15,13 @@ find_eos:
 swap:
         cmp     edx, ecx
         jbe     fin
-        mov     al, [ecx]
-        xchg    al, [edx]
-        mov     [ecx], al
+        mov     al, [rcx]
+        xchg    al, [rdx]
+        mov     [rcx], al
         inc     ecx
         dec     edx
         jmp     swap
 
 fin:
-        mov     eax, [ebp+8]
-        pop     ebp
+        mov     eax, edi
         ret
-        

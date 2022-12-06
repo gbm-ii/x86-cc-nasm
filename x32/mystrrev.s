@@ -1,4 +1,4 @@
-; x32 version - 32-bit pointers
+; x32 version - 64-bit mode with 32-bit user space pointers
         section .text
         global  mystrrev
 mystrrev:

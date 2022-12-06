@@ -9,10 +9,10 @@ NASMOPT = -w+all
 	cc $(CCFMT) $(CCOPT) -c $<
 
 .s.o:
-	nasm $(NASMFMT) $(NASMOPT) $<
+	nasm $(NASMFMT) $(NASMOPT) -l $*.lst $<
 
 $(EXEFILE): $(OBJECTS)
-	cc $(CCFMT) -o $(EXEFILE) $(OBJECTS)
+	cc $(CCFMT) -o $@ $^
 	
 clean:
-	rm *.o $(EXEFILE)
+	rm *.o *.lst $(EXEFILE)

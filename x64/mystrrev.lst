@@ -1,0 +1,27 @@
+     1                                   ; x86-64 version
+     2                                          section .text
+     3                                          global  mystrrev
+     4                                  mystrrev:
+     5 00000000 4889F9                          mov     rcx, rdi        ; head ptr
+     6 00000003 4889CA                          mov     rdx, rcx        ; tail ptr
+     7                                  
+     8                                  find_eos:       ; search for trailing NUL
+     9 00000006 8A02                            mov     al, [rdx]
+    10 00000008 48FFC2                          inc     rdx
+    11 0000000B 84C0                            test    al, al
+    12 0000000D 75F7                            jnz     find_eos
+    13                                  
+    14 0000000F 4883EA02                        sub     rdx, 2
+    15                                  swap:
+    16 00000013 4839CA                          cmp     rdx, rcx
+    17 00000016 760E                            jbe     fin
+    18 00000018 8A01                            mov     al, [rcx]
+    19 0000001A 8602                            xchg    al, [rdx]
+    20 0000001C 8801                            mov     [rcx], al
+    21 0000001E 48FFC1                          inc     rcx
+    22 00000021 48FFCA                          dec     rdx
+    23 00000024 EBED                            jmp     swap
+    24                                  
+    25                                  fin:
+    26 00000026 4889F8                          mov     rax, rdi        ; return the original arg
+    27 00000029 C3                              ret

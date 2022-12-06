@@ -1,10 +1,11 @@
+ ; x86-64 version
         section .text
         global  mystrrev
 mystrrev:
-        mov     rcx, rdi
-        mov     rdx, rcx
+        mov     rcx, rdi        ; head ptr
+        mov     rdx, rcx        ; tail ptr
 
-find_eos:
+find_eos:       ; search for trailing NUL
         mov     al, [rdx]
         inc     rdx
         test    al, al
@@ -22,5 +23,5 @@ swap:
         jmp     swap
 
 fin:
-        mov     rax, rdi
+        mov     rax, rdi        ; return the original arg
         ret

@@ -1,0 +1,32 @@
+     1                                  ; An equivalent of strrev() function from C standard library
+     2                                  ; x86 32-bit version, Unix- and Windows-compatible
+     3                                          section .text
+     4                                          global  mystrrev
+     5                                  mystrrev:
+     6 00000000 55                              push    ebp
+     7 00000001 89E5                            mov     ebp, esp
+     8                                  
+     9 00000003 8B4D08                          mov     ecx, [ebp+8]    ; head ptr
+    10 00000006 89CA                            mov     edx, ecx        ; tail ptr
+    11                                  
+    12                                  find_eos:       ; search for trailing NUL
+    13 00000008 8A02                            mov     al, [edx]
+    14 0000000A 42                              inc     edx
+    15 0000000B 84C0                            test    al, al
+    16 0000000D 75F9                            jnz     find_eos
+    17                                                          ; edx points past the trailing NUL now
+    18 0000000F 83EA02                          sub     edx, 2  ; make edx point to the last char of the string
+    19                                  swap:
+    20 00000012 39CA                            cmp     edx, ecx
+    21 00000014 760A                            jbe     fin
+    22 00000016 8A01                            mov     al, [ecx]
+    23 00000018 8602                            xchg    al, [edx]
+    24 0000001A 8801                            mov     [ecx], al
+    25 0000001C 41                              inc     ecx     ; move ptr forward
+    26 0000001D 4A                              dec     edx     ; move ptr backward
+    27 0000001E EBF2                            jmp     swap
+    28                                  
+    29                                  fin:
+    30 00000020 8B4508                          mov     eax, [ebp+8]    ; return the original arg
+    31 00000023 5D                              pop     ebp
+    32 00000024 C3                              ret

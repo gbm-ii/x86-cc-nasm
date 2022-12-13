@@ -3,7 +3,7 @@
         section .text
         global  mystrrev
 mystrrev:
-        push    ebp
+        push    ebp             ; save caller's frame pointer
         mov     ebp, esp
 
         mov     ecx, [ebp+8]    ; head ptr
@@ -28,5 +28,5 @@ swap:
 
 fin:
         mov     eax, [ebp+8]    ; return the original arg
-        pop     ebp
+        pop     ebp             ; restore caller's frame pointer
         ret

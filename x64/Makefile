@@ -2,8 +2,8 @@ EXEFILE = rev
 OBJECTS = rev.o mystrrev.o
 CCFMT = -m64
 NASMFMT = -f elf64
-CCOPT = 
-NASMOPT = -w+all
+CCOPT = -g
+NASMOPT = -g -w+all
 
 .c.o:
 	cc $(CCFMT) $(CCOPT) -c $<
@@ -12,7 +12,7 @@ NASMOPT = -w+all
 	nasm $(NASMFMT) $(NASMOPT) -l $*.lst $<
 
 $(EXEFILE): $(OBJECTS)
-	cc $(CCFMT) -o $@ $^
+	cc $(CCFMT) $(CCOPT) -o $@ $^
 	
 clean:
 	rm *.o *.lst $(EXEFILE)
